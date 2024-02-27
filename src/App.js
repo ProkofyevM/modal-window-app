@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Input } from './Components/Input'
 import styles from './app.module.css'
 
 const sendData = (form) => {
