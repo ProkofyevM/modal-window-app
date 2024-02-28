@@ -1,92 +1,99 @@
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import styles from './app.module.css'
 
-const sendData = (form) => {
-	console.log(form)
-}
-
-const initialState = {
-	email: '',
-	password: '',
-	repeatPassword: '',
-}
-
-const useStore = () => {
-	const [state, setState] = useState(initialState)
-
-	return {
-		getState: () => state,
-		updateState: (fieldName, newValue) => {
-			setState({ ...state, [fieldName]: newValue })
-		},
-		resetState: () => {
-			setState(initialState)
-		},
-	}
+const sendFormData = (formData) => {
+	console.log(formData)
 }
 
 export const App = () => {
-	const { getState, updateState, resetState } = useStore()
-	const [newError, setNewError] = useState(null)
+	const {
+		register,
+		reset,
+		handleSubmit,
+		formState: { errors },
+	} = useForm({
+		mode: 'onBlur',
+		defaultValues: {
+			email: '',
+			password: '',
+			repeatPassword: '',
+		},
+	})
 
-	const onSubmit = (event) => {
-		event.preventDefault()
-		sendData(getState())
+	const emailError = errors.email?.message
+	const passwordError = errors.password?.message
+	const repeatPasswordError = errors.repeatPassword?.message
+
+	const emailProps = {
+		pattern: {
+			value: /^[\w]*@[a-z]*\.[a-z]{2,3}$/,
+			message:
+				'Некорректно введен адрес электронной почты, должен быть example@example.ru',
+		},
 	}
 
-	const resetError = () => {
-		resetState()
-		setNewError(null)
+	const passwordProps = {
+		maxLength: {
+			value: 6,
+			message: 'Неверный пароль. Должно быть не больше 6 символов',
+		},
+		minLength: {
+			value: 3,
+			message: 'Неверный пароль. Должно быть не меньше 3 символов',
+		},
 	}
 
-	const { email, password, repeatPassword } = getState()
-
-	const onChange = ({ target }) => {
-		updateState(target.name, target.value)
-	}
-
-	const onBlur = () => {
-		if (email && !/^[\w]*@[a-z]*\.[a-z]{2,3}$/.test(email)) {
-			setNewError('Некорректно введен адрес электронной почты')
-		} else if (password.length > 6) {
-			setNewError('Превышено число символов. Максимальное 6')
-		} else if (repeatPassword && password !== repeatPassword) {
-			setNewError('Пароль не соответствует')
-		}
+	const repeatPasswordProps = {
+		validate: {
+			value: (value, formValues) => {
+				if (value !== formValues.password) {
+					return 'Пароль не совпадает'
+				}
+			},
+		},
 	}
 
 	return (
 		<div className={styles.app}>
-			<form className={styles.item} onSubmit={onSubmit}>
-				{newError && <div className={styles.error}>{newError}</div>}
+			<form className={styles.item} onSubmit={handleSubmit(sendFormData)}>
+				{emailError && <div className={styles.error}>{emailError}</div>}
 				<input
-					type="email"
+					disabled={!!emailError || !!passwordError || !!repeatPasswordError}
+					{...register('email', emailProps)}
+					className={styles.input}
+					type="text"
 					name="email"
-					value={email}
 					placeholder="e-mail"
-					onChange={onChange}
-					onBlur={onBlur}
 				/>
+				{passwordError && <div className={styles.error}>{passwordError}</div>}
 				<input
+					{...register('password', passwordProps)}
+					className={styles.input}
 					type="password"
 					name="password"
-					value={password}
 					placeholder="password"
-					onChange={onChange}
-					onBlur={onBlur}
 				/>
+				{repeatPasswordError && (
+					<div className={styles.error}>{repeatPasswordError}</div>
+				)}
 				<input
+					{...register('repeatPassword', repeatPasswordProps)}
+					disabled={!!emailError || !!passwordError || !!repeatPasswordError}
+					className={styles.input}
 					type="password"
 					name="repeatPassword"
-					value={repeatPassword}
 					placeholder="repeatPassword"
-					onChange={onChange}
-					onBlur={onBlur}
 				/>
-				<button type="submit" disabled={newError !== null}>
+				<button
+					type="submit"
+					className={styles.btn1}
+					disabled={!!emailError || !!passwordError || !!repeatPasswordError || errors}
+				>
 					Зарегестрироваться
 				</button>
-				<button onClick={resetError}>Перезапустить</button>
+				<button type="button" className={styles.btn2} onClick={() => reset()}>
+					Перезапустить
+				</button>
 			</form>
 		</div>
 	)
