@@ -55,6 +55,7 @@ export const App = () => {
 
 	return (
 		<div className={styles.app}>
+			<div className={styles.login}>LOGIN</div>
 			<form className={styles.item} onSubmit={handleSubmit(sendFormData)}>
 				{emailError && <div className={styles.error}>{emailError}</div>}
 				<input
@@ -87,7 +88,9 @@ export const App = () => {
 				<button
 					type="submit"
 					className={styles.btn1}
-					disabled={!!emailError || !!passwordError || !!repeatPasswordError || errors}
+					disabled={
+						!!emailError || !!passwordError || !!repeatPasswordError || errors
+					}
 				>
 					Зарегестрироваться
 				</button>

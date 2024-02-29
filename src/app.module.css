@@ -8,15 +8,19 @@
 	margin-top: 10px;
 }
 
+.login {
+	font-size: 50px;
+	margin: 20px;
+}
+
 .item {
 	display: grid;
-  justify-content: center;
+	justify-items: center;
 	width: 250px;
-	height: 400px;
+	height: 350px;
 	padding: 30px 10px 30px 10px;
 	border: 1px solid black;
 	border-radius: 20px;
-	box-shadow: 3px 3px 3px rgb(153, 152, 152);
 	background-image: -webkit-linear-gradient(
 		left,
 		rgb(181, 181, 182),
@@ -25,9 +29,9 @@
 }
 
 .error {
-  display: grid;
-  justify-content: center;
-  align-content: center;
+	display: grid;
+	justify-content: center;
+	align-content: center;
 	height: 60px;
 	border: 1px solid red;
 	border-radius: 3px;
@@ -37,7 +41,7 @@
 }
 
 .input {
-  background-color: #3b4148;
+	background-color: #3b4148;
 	border-radius: 0px 3px 3px 0px;
 	-moz-border-radius: 0px 3px 3px 0px;
 	-webkit-border-radius: 0px 3px 3px 0px;
@@ -48,29 +52,27 @@
 }
 
 .btn1 {
-
 	border-radius: 3px;
+	margin-bottom: 0px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	background-color: #ea4c88;
 	color: #eee;
 	font-weight: bold;
-	margin-bottom: 2em;
+	margin-bottom: 0.5em;
 	text-transform: uppercase;
-	cursor:pointer;
+	cursor: pointer;
 	width: 235px;
 }
 
 .btn2 {
-
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	-webkit-border-radius: 3px;
 	background-color: #ea4c88;
 	color: #eee;
 	font-weight: bold;
-	margin-bottom: 2em;
 	text-transform: uppercase;
-	cursor:pointer;
+	cursor: pointer;
 	width: 235px;
 }
