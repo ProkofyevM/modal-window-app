@@ -1,6 +1,4 @@
 .app {
-	margin: 0;
-	padding: 0;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -12,18 +10,25 @@
 
 .item {
 	display: grid;
-	width: 450px;
-	height: 500px;
-	gap: 20px;
+  justify-content: center;
+	width: 250px;
+	height: 400px;
 	padding: 30px 10px 30px 10px;
 	border: 1px solid black;
-	border-radius: 10px;
+	border-radius: 20px;
 	box-shadow: 3px 3px 3px rgb(153, 152, 152);
-	background-image: -webkit-linear-gradient(left, rgb(83, 149, 230), rgb(213, 239, 211));
+	background-image: -webkit-linear-gradient(
+		left,
+		rgb(181, 181, 182),
+		rgb(212, 215, 212)
+	);
 }
 
 .error {
-	height: 35px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+	height: 60px;
 	border: 1px solid red;
 	border-radius: 3px;
 	color: rgb(239, 3, 3);
@@ -32,27 +37,40 @@
 }
 
 .input {
-  font-size: 16px;
-	border: 1px solid rgb(24, 118, 96);
-	border-radius: 7px;
-  font-family: Courier New, monospace;
-	text-align: center;
-	color: black;
-  background-image: -webkit-linear-gradient(left, rgb(156, 193, 238), rgb(213, 239, 211));
+  background-color: #3b4148;
+	border-radius: 0px 3px 3px 0px;
+	-moz-border-radius: 0px 3px 3px 0px;
+	-webkit-border-radius: 0px 3px 3px 0px;
+	color: #dbddde;
+	margin-bottom: 1em;
+	padding: 0 16px;
+	width: 198px;
 }
 
 .btn1 {
-	font-size: 25px;
-	font-family: Courier New, monospace;
-	color: rgb(107, 37, 116);
-	border-radius: 7px;
-	background-image: -webkit-linear-gradient(left, rgb(15, 106, 217), rgb(111, 173, 200));
+
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #ea4c88;
+	color: #eee;
+	font-weight: bold;
+	margin-bottom: 2em;
+	text-transform: uppercase;
+	cursor:pointer;
+	width: 235px;
 }
 
 .btn2 {
-	font-size: 25px;
-	font-family: Courier New, monospace;
-	color: rgb(35, 43, 63);
-	border-radius: 7px;
-	background-image: -webkit-linear-gradient(left, rgb(150, 51, 163), rgb(111, 173, 200));
+
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background-color: #ea4c88;
+	color: #eee;
+	font-weight: bold;
+	margin-bottom: 2em;
+	text-transform: uppercase;
+	cursor:pointer;
+	width: 235px;
 }
