@@ -8,27 +8,6 @@ const sendFormData = (formData) => {
 	console.log(formData)
 }
 
-//const schema = yup.object().shape({
-//	email: yup
-//		.string()
-//		.matches(
-//			/^[\w]*@[a-z]*\.[a-z]{2,3}$/,
-//			'Некорректно введен адрес электронной почты, должен быть example@example.ru',
-//		),
-//	password: yup
-//		.string()
-//		.max(6, 'Неверный пароль. Должно быть не больше 6 символов')
-//		.min(3, 'Неверный пароль. Должно быть не меньше 3 символов'),
-//	repeatPassword: yup
-//		.string()
-//		.test('isRepeatPassword', 'Пароль не совпадает', (value, formValue) => {
-//			if (value === formValue.parent.password) {
-//				console.log('formValue.parent', formValue.parent)
-//			}else{
-
-//      }
-//		}),
-//})
 
 export const App = () => {
 	const schema = yup.object().shape({
