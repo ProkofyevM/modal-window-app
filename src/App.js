@@ -1,57 +1,74 @@
-import { useForm } from 'react-hook-form'
+import { set, useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
+
 import styles from './app.module.css'
 
 const sendFormData = (formData) => {
 	console.log(formData)
 }
 
+//const schema = yup.object().shape({
+//	email: yup
+//		.string()
+//		.matches(
+//			/^[\w]*@[a-z]*\.[a-z]{2,3}$/,
+//			'Некорректно введен адрес электронной почты, должен быть example@example.ru',
+//		),
+//	password: yup
+//		.string()
+//		.max(6, 'Неверный пароль. Должно быть не больше 6 символов')
+//		.min(3, 'Неверный пароль. Должно быть не меньше 3 символов'),
+//	repeatPassword: yup
+//		.string()
+//		.test('isRepeatPassword', 'Пароль не совпадает', (value, formValue) => {
+//			if (value === formValue.parent.password) {
+//				console.log('formValue.parent', formValue.parent)
+//			}else{
+
+//      }
+//		}),
+//})
+
 export const App = () => {
+	const schema = yup.object().shape({
+		email: yup
+			.string()
+			.matches(
+				/^[\w]*@[a-z]*\.[a-z]{2,3}$/,
+				'Некорректно введен адрес электронной почты, должен быть example@example.ru',
+			),
+		password: yup
+			.string()
+			.max(6, 'Неверный пароль. Должно быть не больше 6 символов')
+			.min(3, 'Неверный пароль. Должно быть не меньше 3 символов'),
+		repeatPassword: yup
+			.string()
+			.test(
+				'isRepeatPassword',
+				'Пароль не совпадает',
+				(value) => value === getValues('password'),
+			),
+	})
+
 	const {
 		register,
 		reset,
+		getValues,
 		handleSubmit,
 		formState: { errors },
 	} = useForm({
-		mode: 'onBlur',
 		defaultValues: {
 			email: '',
 			password: '',
 			repeatPassword: '',
 		},
+		resolver: yupResolver(schema),
 	})
 
 	const emailError = errors.email?.message
 	const passwordError = errors.password?.message
 	const repeatPasswordError = errors.repeatPassword?.message
-
-	const emailProps = {
-		pattern: {
-			value: /^[\w]*@[a-z]*\.[a-z]{2,3}$/,
-			message:
-				'Некорректно введен адрес электронной почты, должен быть example@example.ru',
-		},
-	}
-
-	const passwordProps = {
-		maxLength: {
-			value: 6,
-			message: 'Неверный пароль. Должно быть не больше 6 символов',
-		},
-		minLength: {
-			value: 3,
-			message: 'Неверный пароль. Должно быть не меньше 3 символов',
-		},
-	}
-
-	const repeatPasswordProps = {
-		validate: {
-			value: (value, formValues) => {
-				if (value !== formValues.password) {
-					return 'Пароль не совпадает'
-				}
-			},
-		},
-	}
 
 	return (
 		<div className={styles.app}>
@@ -60,7 +77,7 @@ export const App = () => {
 				{emailError && <div className={styles.error}>{emailError}</div>}
 				<input
 					disabled={!!emailError || !!passwordError || !!repeatPasswordError}
-					{...register('email', emailProps)}
+					{...register('email')}
 					className={styles.input}
 					type="text"
 					name="email"
@@ -68,7 +85,7 @@ export const App = () => {
 				/>
 				{passwordError && <div className={styles.error}>{passwordError}</div>}
 				<input
-					{...register('password', passwordProps)}
+					{...register('password')}
 					className={styles.input}
 					type="password"
 					name="password"
@@ -78,7 +95,7 @@ export const App = () => {
 					<div className={styles.error}>{repeatPasswordError}</div>
 				)}
 				<input
-					{...register('repeatPassword', repeatPasswordProps)}
+					{...register('repeatPassword')}
 					disabled={!!emailError || !!passwordError || !!repeatPasswordError}
 					className={styles.input}
 					type="password"
@@ -88,9 +105,7 @@ export const App = () => {
 				<button
 					type="submit"
 					className={styles.btn1}
-					disabled={
-						!!emailError || !!passwordError || !!repeatPasswordError || errors
-					}
+					disabled={!!emailError || !!passwordError || !!repeatPasswordError}
 				>
 					Зарегестрироваться
 				</button>
